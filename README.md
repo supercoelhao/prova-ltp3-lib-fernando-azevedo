@@ -259,7 +259,7 @@ Confira no MySQL se as tabelas `autores` e `livros` foram criadas.
 **Q3.3 — Como funciona o `$request->validate()`? O que acontece quando a validação falha e quando ela passa?**
 
 > _Resposta:_
->
+>Esse comando testa se os dados que o usuário enviou estão seguindo as regras que a gente definiu. Se estiver tudo certo, ele deixa o código continuar e salva os dados. Se tiver algo errado, ele trava a execução e manda o usuário de volta para a tela anterior já mostrando as mensagens de erro.
 >
 
 ---
@@ -294,13 +294,13 @@ Confira no MySQL se as tabelas `autores` e `livros` foram criadas.
 **Q4.1 — Como criar as rotas de um CRUD no Laravel? Quais rotas o `Route::resource` gera (método HTTP, URI, ação e nome)?**
 
 > _Resposta:_
->
+>A gente vai no arquivo "web.php" e usa o comando "Route::resource". Só com essa linha o Laravel já cria sete rotas diferentes de uma vez, cobrindo o listar, criar, salvar, mostrar, editar, atualizar e deletar. Cada uma dessas rotas já ganha um nome padrão que a gente pode usar nas views.
 >
 
 **Q4.2 — Como funciona o sistema de rotas? Explique o caminho de uma requisição desde a URL até o controller e a utilidade das rotas nomeadas (`route('autores.index')`).**
 
 > _Resposta:_
->
+>O sistema de rotas pega o link que o usuário acessou e direciona para a função certa do controller. Usar rotas nomeadas é muito bom porque a gente chama a rota pelo nome dela no código em vez de escrever o link inteiro. Assim, se o link mudar no futuro, a gente não precisa sair alterando em todas as telas do sistema.
 >
 
 ---
@@ -343,27 +343,27 @@ Crie as quatro views abaixo. Todas devem estender o layout base com `@extends('l
 **Q5.1 — Como criar um formulário Blade para cadastro e para edição? Por que o formulário de edição precisa de `@method('PUT')` e para que serve o `@csrf`?**
 
 > _Resposta:_
->
+>A gente cria os formulários usando as tags do HTML normal junto com o Blade. No formulário de edição a gente precisa colocar a diretiva method PUT porque o HTML padrão só entende GET e POST, então isso serve para forçar o envio da edição do jeito certo. A diretiva csrf é obrigatória para gerar um código de segurança e evitar que pessoas mal intencionadas enviem formulários falsos para o nosso site.
 >
 
 **Q5.2 — Como funciona a exibição dos erros de validação e a manutenção dos dados digitados? Explique `$errors`, `@error` e `old()`.**
 
 > _Resposta:_
->
+>Quando a validação dá erro, o Laravel manda uma variável chamada errors para a tela. A gente usa a diretiva error para ver se um campo específico deu problema e mostrar a mensagem de erro dele. A função old serve para recarregar o que o usuário já tinha digitado antes do erro, assim ele não precisa preencher o formulário todo de novo.
 >
 
 ---
 
 ## Checklist de entrega
 
-- [ ] Models `Autor` e `Livro` com `$fillable` e relacionamentos
-- [ ] Migrations de `autores` e `livros` executadas com chave estrangeira
-- [ ] `AutorController` e `LivroController` com `index`, `create`, `store`, `edit`, `update`, `destroy`
-- [ ] Validações com `$request->validate()` em `store` e `update`
-- [ ] Rotas `resource` registradas e nomeadas corretamente
-- [ ] Views `create` e `edit` de autores e livros
-- [ ] Mensagens de erro e de sucesso exibidas
-- [ ] Todas as questões (Q1.1 a Q5.2) respondidas neste README
+- [x] Models `Autor` e `Livro` com `$fillable` e relacionamentos
+- [x] Migrations de `autores` e `livros` executadas com chave estrangeira
+- [x] `AutorController` e `LivroController` com `index`, `create`, `store`, `edit`, `update`, `destroy`
+- [x] Validações com `$request->validate()` em `store` e `update`
+- [x] Rotas `resource` registradas e nomeadas corretamente
+- [x] Views `create` e `edit` de autores e livros
+- [x] Mensagens de erro e de sucesso exibidas
+- [x] Todas as questões (Q1.1 a Q5.2) respondidas neste README
 
 
 ## Licença

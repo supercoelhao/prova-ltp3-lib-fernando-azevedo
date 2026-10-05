@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Livro;
+use App\Models\Autor;
 use Illuminate\Http\Request;
 
 class LivroController extends Controller
@@ -14,7 +15,8 @@ class LivroController extends Controller
      */
     public function index()
     {
-        //
+        $livros = Livro::with('autor')->get();
+        return view('livros.index', compact('livros'));
     }
 
     /**
@@ -24,7 +26,8 @@ class LivroController extends Controller
      */
     public function create()
     {
-        //
+        $autores = Autor::all(); 
+        return view('livros.create', compact('autores'));
     }
 
     /**
@@ -35,18 +38,15 @@ class LivroController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        $validated = $request->validate([
+            'titulo' => 'required|string|max:255',
+            'ano_publicacao' => 'required|integer|digits:4',
+            'isbn' => 'required|string|max:20|unique:livros,isbn',
+            'autor_id' => 'required|exists:autores,id',
+        ]);
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Livro  $livro
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Livro $livro)
-    {
-        //
+        Livro::create($validated);
+        return redirect()->route('livros.index')->with('success', 'Livro cadastrado com sucesso!');
     }
 
     /**
@@ -57,7 +57,9 @@ class LivroController extends Controller
      */
     public function edit(Livro $livro)
     {
-        //
+        
+        $autores = Autor::all();
+        return view('livros.edit', compact('livro', 'autores'));
     }
 
     /**
@@ -69,7 +71,16 @@ class LivroController extends Controller
      */
     public function update(Request $request, Livro $livro)
     {
-        //
+        $validated = $request->validate([
+            'titulo' => 'required|string|max:255',
+            'ano_publicacao' => 'required|integer|digits:4',
+            'isbn' => 'required|string|max:20|unique:livros,isbn,' . $livro->id,
+            'autor_id' => 'required|exists:autores,id',
+        ]);
+
+        $livro->update($validated);
+        
+        return redirect()->route('livros.index')->with('success', 'Livro atualizado com sucesso!');
     }
 
     /**
@@ -80,6 +91,7 @@ class LivroController extends Controller
      */
     public function destroy(Livro $livro)
     {
-        //
+        $livro->delete();
+        return redirect()->route('livros.index')->with('success', 'Livro excluído com sucesso!');
     }
 }

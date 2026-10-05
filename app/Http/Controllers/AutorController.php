@@ -14,7 +14,8 @@ class AutorController extends Controller
      */
     public function index()
     {
-        //
+        $autores = Autor::all();
+        return view('autores.index', compact('autores'));
     }
 
     /**
@@ -24,7 +25,7 @@ class AutorController extends Controller
      */
     public function create()
     {
-        //
+        return view('autores.create');
     }
 
     /**
@@ -35,18 +36,13 @@ class AutorController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        $validated = $request->validate([
+            'nome' => 'required|string|max:255',
+            'nacionalidade' => 'required|string|max:100',
+        ]);
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Autor  $autor
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Autor $autor)
-    {
-        //
+        Autor::create($validated);
+        return redirect()->route('autores.index')->with('success', 'Autor criado com sucesso!');
     }
 
     /**
@@ -57,7 +53,7 @@ class AutorController extends Controller
      */
     public function edit(Autor $autor)
     {
-        //
+        return view('autores.edit', compact('autor'));
     }
 
     /**
@@ -69,7 +65,14 @@ class AutorController extends Controller
      */
     public function update(Request $request, Autor $autor)
     {
-        //
+        $validated = $request->validate([
+            'nome' => 'required|string|max:255',
+            'nacionalidade' => 'required|string|max:100',
+        ]);
+
+        $autor->update($validated);
+        
+        return redirect()->route('autores.index')->with('success', 'Autor atualizado com sucesso!');
     }
 
     /**
@@ -80,6 +83,11 @@ class AutorController extends Controller
      */
     public function destroy(Autor $autor)
     {
-        //
+            if ($autor->livros()->count() > 0) {
+            return redirect()->route('autores.index')->with('error', 'Não pode apagar um autor que tenha livros.');
+        }
+
+        $autor->delete();
+        return redirect()->route('autores.index')->with('success', 'Autor apagado com sucesso!');
     }
 }
