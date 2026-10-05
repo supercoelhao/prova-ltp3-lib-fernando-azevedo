@@ -157,13 +157,13 @@ erDiagram
 **Q1.1 — Como criar uma model no Laravel?**
 
 > _Resposta:_
->
+>Utilizamos o terminal e digita o comando "php artisan make:model NomeDaModel". Isso cria um arquivo PHP na pasta de models que vai representar a tabela do banco de dados.
 >
 
 **Q1.2 — Como funciona uma model? Explique o papel das propriedades `$table` e `$fillable` e dos relacionamentos `hasMany` / `belongsTo`.**
 
 > _Resposta:_
->
+>A model é como uma cópia da tabela do banco de dados no nosso código. A propriedade $table serve para avisar o Laravel qual é o nome exato da tabela. A propriedade $fillable é uma segurança para dizer quais campos podem ser salvos de uma vez só. Já os relacionamentos mostram como as tabelas se conectam. O 'hasMany' diz que um autor tem vários livros, e o 'belongsTo' diz que um livro pertence a um autor específico.
 >
 
 ---
@@ -181,13 +181,13 @@ Confira no MySQL se as tabelas `autores` e `livros` foram criadas.
 **Q2.1 — Como criar uma migration e aplicá-la no banco de dados?**
 
 > _Resposta:_
->
+>Para criar uma migration a gente digita no terminal "php artisan make:migration create_nome_da_tabela_table". Depois de colocar as colunas no arquivo que foi gerado, é só rodar o comando php artisan migrate para o banco de dados ser atualizado.
 >
 
 **Q2.2 — Como funciona uma migration? Explique os métodos `up()` e `down()`, a importância da ordem de execução e o que faz `foreignId(...)->constrained(...)`.**
 
 > _Resposta:_
->
+>A migration funciona como um histórico de mudanças do banco de dados. O método 'up' é usado para criar tabelas ou colunas novas, e o método 'down' serve para desfazer isso caso dê algum erro. A ordem é importante porque não dá para criar uma chave estrangeira apontando para uma tabela que ainda não existe. O comando "foreignId (coluna) -> constrained (tabela)" cria a coluna de chave estrangeira de forma facilitada e já a vincula diretamente à chave primária 'id' da tabela informada.
 >
 
 ---
@@ -247,13 +247,13 @@ Confira no MySQL se as tabelas `autores` e `livros` foram criadas.
 **Q3.1 — Como criar um controller? Qual a diferença de usar as opções `--resource` e `--model`?**
 
 > _Resposta:_
->
+>Para criar um controller a gente roda o comando "php artisan make:controller NomeController". Quando colocamos a opção resource, o Laravel já cria o arquivo com todos os métodos do CRUD prontos. A opção model serve para ele já importar a model certa e colocar ela direto dentro desses métodos.
 >
 
 **Q3.2 — Como funciona um controller dentro da arquitetura MVC? Explique a comunicação entre Model, View e Controller e o que é o *Route Model Binding* (ex.: receber `Autor $autor` no método).**
 
 > _Resposta:_
->
+>O controller é o meio de campo da aplicação. Ele recebe o que o usuário pediu na rota, pede para a model buscar ou salvar os dados no banco e depois manda isso para a tela certa. O Route Model Binding é uma facilidade do Laravel que já busca o registro no banco sozinho pelo ID da URL e entrega pronto no método, sem a gente precisar fazer a busca no banco de dados na mão.
 >
 
 **Q3.3 — Como funciona o `$request->validate()`? O que acontece quando a validação falha e quando ela passa?**
